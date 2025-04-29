@@ -1,8 +1,7 @@
 package com.np.shishirrijal.photo_diary_app.contoller;
 
 import com.np.shishirrijal.photo_diary_app.model.DiaryEntry;
-import com.np.shishirrijal.photo_diary_app.repository.DiaryEntryRepository;
-import com.np.shishirrijal.photo_diary_app.service.DiaryEntryService;
+ import com.np.shishirrijal.photo_diary_app.service.DiaryEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("/api/photos")
 public class DiaryEntryController {
 
@@ -32,7 +31,5 @@ public class DiaryEntryController {
     public DiaryEntry getPhotoEntry(@PathVariable UUID id) {
         return diaryEntryService.getPhotoEntry(id);
     }
-
-
 
 }
