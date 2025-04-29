@@ -2,6 +2,7 @@ package com.np.shishirrijal.photo_diary_app.service;
 
 import com.np.shishirrijal.photo_diary_app.model.DiaryEntry;
 import com.np.shishirrijal.photo_diary_app.repository.DiaryEntryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +14,11 @@ import java.util.UUID;
 @Service
 public class DiaryEntryService {
 
+    @Autowired
     DiaryEntryRepository diaryEntryRepository;
 
 
-     public DiaryEntry createPhotoEntry(@RequestBody DiaryEntry diary) {
+     public DiaryEntry createPhotoEntry(DiaryEntry diary) {
          return diaryEntryRepository.save(diary);
      }
 
@@ -24,7 +26,7 @@ public class DiaryEntryService {
         return diaryEntryRepository.findAll();
     }
 
-     public DiaryEntry getPhotoEntry(@PathVariable UUID id) {
+     public DiaryEntry getPhotoEntry(UUID id) {
         return diaryEntryRepository.findById(id).orElse(null);
      }
 
