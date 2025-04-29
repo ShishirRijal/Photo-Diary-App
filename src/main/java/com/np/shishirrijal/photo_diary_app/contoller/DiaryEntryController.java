@@ -24,6 +24,7 @@ public class DiaryEntryController {
 
     @GetMapping
     public List<DiaryEntry> getAllPhotoEntries() {
+        System.out.println(diaryEntryService.getAllPhotoEntries());
         return diaryEntryService.getAllPhotoEntries();
     }
 
