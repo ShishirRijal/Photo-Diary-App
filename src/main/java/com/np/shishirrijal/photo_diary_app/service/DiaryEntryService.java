@@ -26,8 +26,12 @@ public class DiaryEntryService {
         return diaryEntryRepository.findAll();
     }
 
-     public DiaryEntry getPhotoEntry(UUID id) {
+     public DiaryEntry getPhotoEntry(Long id) {
         return diaryEntryRepository.findById(id).orElse(null);
      }
+
+    public DiaryEntry getDiaryEntryWithUser(Long id) {
+        return diaryEntryRepository.findByIdWithUser(id); // Fetches both DiaryEntry and User
+    }
 
 }

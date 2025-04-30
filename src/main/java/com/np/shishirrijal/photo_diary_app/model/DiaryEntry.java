@@ -1,36 +1,35 @@
 package com.np.shishirrijal.photo_diary_app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 
 
 @Entity
 public class DiaryEntry {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "user_id")
     private User user;
+
     private String imageUrl;
     private String description;
     private String mood;  // e.g., Happy, Sad
     private String visibility;
-
     private String tags;
-
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     public DiaryEntry() {
     }
 
-    public DiaryEntry(UUID id, User user, String imageUrl, String description, String mood, String visibility, String createdAt, String tags) {
+    public DiaryEntry(Long id, User user, String imageUrl, String description, String mood, String visibility, LocalDateTime createdAt, String tags) {
         this.id = id;
         this.user = user;
         this.imageUrl = imageUrl;
@@ -41,11 +40,11 @@ public class DiaryEntry {
         this.tags = tags;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -89,11 +88,11 @@ public class DiaryEntry {
         this.imageUrl = imageUrl;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
