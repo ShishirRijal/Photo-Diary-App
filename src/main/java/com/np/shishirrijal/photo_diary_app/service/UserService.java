@@ -49,18 +49,18 @@ public class UserService {
         System.out.println("Authentication: inside");
          try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
              System.out.println("Authentication: " + authentication);
             if (authentication.isAuthenticated()) {
-                System.out.println("Authentication: token " + jwtUtil.generateToken(request.getEmail()));
-                return jwtUtil.generateToken(request.getEmail());
+                System.out.println("Authentication: token " + jwtUtil.generateToken(request.getUsername()));
+                return jwtUtil.generateToken(request.getUsername());
             }
              System.out.println("invalid credentials");
             throw new BadCredentialsException("Invalid credentials");
         } catch (BadCredentialsException e) {
-             System.out.println("invalid email");
-            throw new BadCredentialsException("Invalid email or password");
+             System.out.println("invalid username");
+            throw new BadCredentialsException("Invalid username or password");
         }
     }
 }
