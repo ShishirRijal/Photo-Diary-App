@@ -1,5 +1,6 @@
 package com.np.shishirrijal.photo_diary_app.contoller;
 
+import com.np.shishirrijal.photo_diary_app.model.LoginRequest;
 import com.np.shishirrijal.photo_diary_app.model.User;
 import com.np.shishirrijal.photo_diary_app.repository.UserRepository;
 //import com.np.shishirrijal.photo_diary_app.service.MyUserDetailsService;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,14 +48,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest request) {
-        return ResponseEntity.ok("Login successful!");
-//        authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-//
-//        final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-//        final String jwt = jwtUtil.generateToken(userDetails.getUsername());
-//        return ResponseEntity.ok(jwt);
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        System.out.println("lgoin endpoint");
+        try {
+            String token = userService.verify(request);
+            return ResponseEntity.ok().body(token);
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
     }
 
     @GetMapping("/csrf-token")
@@ -67,24 +71,5 @@ public class AuthController {
 }
 
 
-class AuthRequest {
-    private String email;
-    private String password;
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-}
 
