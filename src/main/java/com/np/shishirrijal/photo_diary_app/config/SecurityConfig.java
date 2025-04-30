@@ -48,13 +48,14 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new InMemoryUserDetailsManager();
+        return new MyUserDetailsService();
     }
+
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//        provider.setPasswordEncoder();
+        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
 
         provider.setUserDetailsService(userDetailsService);
         return provider;
