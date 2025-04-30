@@ -1,28 +1,25 @@
 package com.np.shishirrijal.photo_diary_app.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
 
-import java.util.UUID;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String username;
     private String email;
     private String password;
     private String profilePic;
 
-    public User(String email, UUID id, String username, String password, String profilePic) {
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DiaryEntry> diaryEntries = new ArrayList<>();
+
+    public User(String email, Long id, String username, String password, String profilePic) {
         this.email = email;
         this.id = id;
         this.username = username;
@@ -33,11 +30,11 @@ public class User {
     public User() {
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
 //                .formLogin(Customizer.withDefaults())
+//                .httpBasic().disable()
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 //                .userDetailsService(userDetailsService)

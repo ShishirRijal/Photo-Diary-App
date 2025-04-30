@@ -33,7 +33,7 @@ public class UserService {
     }
 
 
-    public User getUserById(UUID id) {
+    public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
@@ -41,7 +41,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-     public void deleteUser(UUID id) {
+     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 
